@@ -4,7 +4,7 @@ import { PlusCircleOutlined, ExportOutlined } from '@ant-design/icons'
 import moment from 'moment'
 import useSWRInfinite from 'swr/infinite'
 import { ajax } from '../../libs/ajax'
-import { colorTools } from '../../utils'
+import { getStatusColor, getLevelColor } from '../../utils'
 import { levelMap, statusMap, tableTitleMap } from '../../data'
 
 const handleColumns = (keyArr: any) => {
@@ -18,7 +18,7 @@ const handleColumns = (keyArr: any) => {
             key: key,
             render: (g: Game) => (
               <Badge
-                color={colorTools.getStatusColor(g.status)}
+                color={getStatusColor(g.status)}
                 text={statusMap[g.status]}
               />
             ),
@@ -37,9 +37,7 @@ const handleColumns = (keyArr: any) => {
             key,
             render: (g: Game) => {
               return (
-                <Tag color={colorTools.getLevelColor(g.level)}>
-                  {levelMap[g.level]}
-                </Tag>
+                <Tag color={getLevelColor(g.level)}>{levelMap[g.level]}</Tag>
               )
             },
           }
@@ -111,8 +109,14 @@ export const GamesPage: React.FC = () => {
       render: (game: Game) => {
         return (
           <ButtonGroup>
-            <Button type='link' onClick={manageGame}>管理</Button>
-            <Button type='link' danger disabled={game.status === 1} onClick={deleteGame}>
+            <Button type='link' onClick={manageGame}>
+              管理
+            </Button>
+            <Button
+              type='link'
+              danger
+              disabled={game.status === 1}
+              onClick={deleteGame}>
               删除
             </Button>
           </ButtonGroup>
@@ -124,7 +128,10 @@ export const GamesPage: React.FC = () => {
         title={'比赛管理'}
         extra={
           <Space>
-            <Button type='primary' icon={<PlusCircleOutlined />} onClick={addGame}>
+            <Button
+              type='primary'
+              icon={<PlusCircleOutlined />}
+              onClick={addGame}>
               添加比赛
             </Button>
             <Button
