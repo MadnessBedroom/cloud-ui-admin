@@ -18,4 +18,9 @@ const levelMap: Record<number, string> = {
   2: '简单',
 }
 
+const gameExcelMap: Record<string, string> = {
+  id: '编号',
+  ...tableTitleMap,
+}
+
 export { tableTitleMap, statusMap, levelMap }

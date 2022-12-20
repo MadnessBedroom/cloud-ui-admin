@@ -1,11 +1,20 @@
-import { Badge, Button, Card, message, Space, Table, Tag } from 'antd'
+import {
+  Badge,
+  Button,
+  Card,
+  message,
+  Space,
+  Table,
+  Tag,
+} from 'antd'
 import ButtonGroup from 'antd/es/button/button-group'
 import { PlusCircleOutlined, ExportOutlined } from '@ant-design/icons'
 import moment from 'moment'
 import useSWRInfinite from 'swr/infinite'
-import { ajax } from '../../libs/ajax'
-import { getStatusColor, getLevelColor } from '../../utils'
-import { levelMap, statusMap, tableTitleMap } from '../../data'
+import { ajax } from '../libs/ajax'
+import { getStatusColor, getLevelColor } from '../utils'
+import { levelMap, statusMap, tableTitleMap } from '../data'
+import { useState } from 'react'
 
 const handleColumns = (keyArr: any) => {
   return keyArr
@@ -56,7 +65,7 @@ const handleColumns = (keyArr: any) => {
             dataIndex: key,
           }
       }
-    }) as Array<any>
+    })
 }
 
 const getKey = (pageIndex: number, prev: Resources<Game>) => {
@@ -76,12 +85,10 @@ export const GamesPage: React.FC = () => {
     async (path) => (await ajax.get<Resources<Game>>(path)).data,
     { revalidateFirstPage: false }
   )
-  // 导出Excel
-  const exportExcel = () => message.warning('功能开发中!', 1)
+
+  console.log('games run!!!!')
   // 页码改变时
   const onPageChange = (page: number) => setSize(page)
-  // 管理比赛
-  const manageGame = () => message.warning('功能开发中!', 1)
   // 删除比赛
   const deleteGame = () => message.warning('功能开发中!', 1)
   // 添加比赛
@@ -92,8 +99,8 @@ export const GamesPage: React.FC = () => {
   if (!data) {
     return (
       <div>
-        {error && '数据加载失败'}
-        {isLoading && '数据加载中'}
+        {error && '数据加载失败!'}
+        {isLoading && '数据加载中...'}
       </div>
     )
   } else {
@@ -109,9 +116,7 @@ export const GamesPage: React.FC = () => {
       render: (game: Game) => {
         return (
           <ButtonGroup>
-            <Button type='link' onClick={manageGame}>
-              管理
-            </Button>
+            <Button type='link'>管理</Button>
             <Button
               type='link'
               danger
@@ -131,13 +136,12 @@ export const GamesPage: React.FC = () => {
             <Button
               type='primary'
               icon={<PlusCircleOutlined />}
-              onClick={addGame}>
+            >
               添加比赛
             </Button>
             <Button
               type='default'
-              icon={<ExportOutlined />}
-              onClick={exportExcel}>
+              icon={<ExportOutlined />}>
               导出Excel
             </Button>
           </Space>
@@ -147,8 +151,8 @@ export const GamesPage: React.FC = () => {
           rowKey={(game: Game) => game.id}
           columns={columns}
           dataSource={resources}
+          loading={isLoading}
           pagination={{
-            size: 'small',
             current: size,
             total: count,
             pageSize: per_page,
@@ -159,7 +163,8 @@ export const GamesPage: React.FC = () => {
             onChange: onPageChange,
             showPrevNextJumpers: false,
             position: ['bottomCenter'],
-          }}></Table>
+          }}
+        />
       </Card>
     )
   }

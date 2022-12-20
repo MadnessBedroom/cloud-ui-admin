@@ -1,10 +1,18 @@
-import { Layout } from 'antd'
+import { useEffect } from 'react'
+import { useSnapshot } from 'valtio'
+import { store, loadMeData } from '../stores/store'
+import { Avatar, Layout, Space } from 'antd'
 import { SideMenu } from '../components/SideMenu'
 import { Outlet } from 'oh-router-react'
 import s from './style.module.scss'
 
 const { Sider, Content, Header } = Layout
 export const BaseLayout: React.FC = () => {
+  const { me } = useSnapshot(store)
+  useEffect(() => {
+    loadMeData()
+  }, [])
+
   return (
     <Layout id={s.container}>
       <Sider className={s.sider}>
@@ -12,7 +20,11 @@ export const BaseLayout: React.FC = () => {
         <SideMenu />
       </Sider>
       <Layout id={s.innerLayout}>
-        <Header className={s.header}></Header>
+        <Header className={s.header}>
+          <Space>
+            <Avatar size='large' src={me.avatar} />
+          </Space>
+        </Header>
         <Content className={s.content}>
           <Outlet />
         </Content>

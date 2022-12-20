@@ -2,9 +2,6 @@ import { Form, Input, message } from 'antd'
 import { FormEventHandler } from 'react'
 import { setToken } from '../utils/token'
 import { router as r } from '../routes'
-import { userApi } from '../apis'
-import logo from '../assets/react.svg'
-import { useLoginStore } from '../stores'
 
 interface Props {
   style: Record<string, string>
@@ -12,21 +9,19 @@ interface Props {
 
 export const LoginForm: React.FC<Props> = (props) => {
   const { style } = props
-  const { data, setData } = useLoginStore()
-  const onFinish: FormEventHandler<HTMLFormElement> = async (values: any) => {
-    const { data } = await userApi.login(values)
-    setToken(data.resource.token)
-    r.navigate('/')
-    message.success('登录成功')
-  }
+  // const onFinish: FormEventHandler<HTMLFormElement> = async (values: any) => {
+  //   const { data } = await userApi.login(values)
+  //   setToken(data.resource.token)
+  //   r.navigate('/')
+  //   message.success('登录成功')
+  // }
 
   return (
     <div className={style['formWrapper']}>
       <div className={style['formHeader']}>
-        <img src={logo} />
         <h1>CloudAdmin</h1>
       </div>
-      <Form name='basic' onFinish={onFinish} autoComplete='off'>
+      {/* <Form name='basic' autoComplete='off'>
         <Form.Item
           name='username'
           rules={[{ required: true, message: '请输入账号!' }]}>
@@ -71,7 +66,7 @@ export const LoginForm: React.FC<Props> = (props) => {
         <button type='submit' className={style['loginButton']}>
           登录
         </button>
-      </Form>
+      </Form> */}
     </div>
   )
 }

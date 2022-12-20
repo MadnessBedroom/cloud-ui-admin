@@ -1,5 +1,7 @@
 let isDev: boolean
 
+type ExportGameOptions = 'all' | 'started' | 'ended' | 'unStart'
+
 type JSONValue =
   | string
   | number
@@ -46,4 +48,25 @@ interface Game {
   created_at: string
   updated_at: string
   deleted_at: string
+}
+
+interface IModalProps {
+  isOpen: boolean
+  setOpen: (isOpen: boolean) => void
+}
+
+type IStore = {
+  me: Partial<IUser>
+}
+
+interface User {
+  id: number
+  username: string
+  nickname: string
+  password: string
+  avatar: string
+  status: number
+  created_at: string
+  updated_at: string
+  game_ids: number[]
 }

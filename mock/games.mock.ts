@@ -76,7 +76,7 @@ export const GamesMock: MockMethod = {
   statusCode: 200,
   response: ({ query }: ResponseParams): Resources<Game> => {
     return createResponse({
-      count: 20,
+      count: 30,
       perPage: 10,
       page: parseInt(query.page),
     })

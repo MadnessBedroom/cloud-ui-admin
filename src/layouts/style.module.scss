@@ -23,7 +23,9 @@
     }
 
     .header {
-      width: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: center;
       height: 50px !important;
       background-color: white;
     }

@@ -7,5 +7,8 @@ export default defineConfig(({ command }) => ({
   define: {
     isDev: command === 'serve',
   },
-  plugins: [react(), viteMockServe()],
+  plugins: [
+    react(),
+    viteMockServe(),
+  ],
 }))
